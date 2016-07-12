@@ -1,0 +1,6 @@
+<h3>Create a New Patient</h3>
+<form action={% url 'signup_form' %} method='POST'>
+  {% csrf_token %}
+  {{ form }}
+  <input type='submit' value='Submit' />
+</form>
