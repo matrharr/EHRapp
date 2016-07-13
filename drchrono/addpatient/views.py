@@ -66,15 +66,15 @@ def signup_form(request):
 
 
 def make_appointment(request):
-  payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm',}
-  req = requests.get('https://drchrono.com/api/offices', params=payload)
-  response = req.json()
+  # payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL',}
+  # req = requests.get('https://drchrono.com/api/offices', params=payload)
+  # response = req.json()
   office_locations = []
   # potentially hide this iteration in a utils file
-  for i in response['results']:
-    if i['city'] != None:
-      if i['city'] not in storage:
-        office_locations.append(i['city'])
+  # for i in response['results']:
+  #   if i['city'] != None:
+  #     if i['city'] not in storage:
+  #       office_locations.append(i['city'])
 
 
   return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})

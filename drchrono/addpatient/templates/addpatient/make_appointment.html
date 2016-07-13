@@ -1,13 +1,27 @@
-<h1>Appointment Page</h1>
+{% extends "addpatient/layout.html" %}
+{% block content %}
 
 
+<h1 >Appointment Page</h1>
 
 <h3>Location Selector</h3>
-  {{ office_locations }}
+
+  <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Dropdown</a>
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="">1</a></li>
+    <li class='divider'></li>
+    <li><a href="">2</a></li>
+    <li class='divider'></li>
+    <li><a href="">3</a></li>
+    <li class='divider'></li>
+    <li><a href="">4</a></li>
+  </ul>
+
+    {{ office_locations }}
 
 
 
 
 <h3>DatePicker</h3>
 
-
+{% endblock %}
