@@ -1,2 +1,2 @@
 # drchrono
-Application for adding new patients
+Application for adding new patients and creating appointments
