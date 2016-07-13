@@ -69,18 +69,33 @@ def make_appointment(request):
   payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm',}
   req = requests.get('https://drchrono.com/api/offices', params=payload)
   response = req.json()
-  storage = []
+  office_locations = []
   # potentially hide this iteration in a utils file
   for i in response['results']:
     if i['city'] != None:
       if i['city'] not in storage:
-        storage.append(i['city'])
+        office_locations.append(i['city'])
 
 
-  return render(request, 'addpatient/make_appointment.html', {'storage' : storage})
+  return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
 
 
 def show_dates(request):
+  # get location from params
   location_selection = request.POST.get('location_selection')
+  # api call
   payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm'}
   req = requests.get('https://drchrono.com/api/offices', params=payload)
+  response = req.json()
+
+  office_object = None
+
+  # find corresponding office object
+  for i in response['results']:
+    if i['city'] != None:
+      if i['city'] == location_selection
+        city_object = i
+
+  return render(request, 'addpatient/make_appointment.html', {'office_object' : office_object})
+
+
