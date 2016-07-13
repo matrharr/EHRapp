@@ -1,0 +1,17 @@
+{% extends 'addpatient/layout.html' %}
+
+{% block content %}
+<div class='container'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>{{ doctor_name }}</p>
+    <p>{{ start_time }}</p>
+    <p>{{ end_time }}</p>
+    <input type='submit' value='Schedule Appointment'/>
+  </form>
+</div>
+{% endblock %}

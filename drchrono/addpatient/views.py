@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import PatientForm, EmailForm
 import requests
+import datetime
 
 def home(request):
   if request.method == "POST":
@@ -10,16 +11,20 @@ def home(request):
       email = request.POST.get('patient_email')
       payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm', 'email' : email}
       req = requests.get('https://drchrono.com/api/patients', params=payload)
-      # what variable quality can be pointed at?
-      if req:
-        # if patient already exists, redirect to set up appt
-        # store patient id in session
+      res = req.json()
+
+      if len(res['results']) > 0:
+        request.session['patient_id'] = res['results'][0]['id']
         return HttpResponseRedirect('/addpatient/make_appointment')
+
       else:
         # if nothing returned, redirect to signup_form
-        return redirect('addpatient/sign_up.html')
 
+        return HttpResponseRedirect('/addpatient/signup_form')
 
+    #invalid form error handling
+    else:
+      return render(request, 'addpatient/home.html', {'form' : form})
 
   else:
     form = EmailForm()
@@ -66,36 +71,40 @@ def signup_form(request):
 
 
 def make_appointment(request):
-  payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm',}
-  req = requests.get('https://drchrono.com/api/offices', params=payload)
-  response = req.json()
-  office_locations = []
-  # potentially hide this iteration in a utils file
-  for i in response['results']:
-    if i['city'] != None:
-      if i['city'] not in storage:
-        office_locations.append(i['city'])
+  # response = req.json()
+  if request.method == "POST":
+    location = request.POST.get('location')
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
+
+    req = requests.get('https://drchrono.com/api/offices', params=payload)
+    res = req.json()
+
+    return render(request, 'addpatient/date_selection.html', {'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
+
+  else:
+    office_locations = ['San Francisco', 'New York', 'Chicago']
+    # for i in response['results']:
+    #   if i['city'] != None:
+    #     if i['city'] not in storage:
+    #       office_locations.append(i['city'])
+    return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
 
 
-  return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
+def date_selection(request):
+  if request.method == "POST":
+    office_id = request.POST.get('office_id')
+    doctor_id = request.POST.get('doctor_id')
+    start_time = request.POST.get('start_time')
+    end_time = request.POST.get('end_time')
 
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'doctor' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : request.session['patient_id'], 'scheduled_time' : datetime.datetime.now()}
 
-def show_dates(request):
-  # get location from params
-  location_selection = request.POST.get('location_selection')
-  # api call
-  payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm'}
-  req = requests.get('https://drchrono.com/api/offices', params=payload)
-  response = req.json()
+    req = requests.post('https://drchrono.com/api/appointments', data=payload)
 
-  office_objects = []
+    return HttpResponse(req)
 
-  # find corresponding office objects
-  for i in response['results']:
-    if i['city'] != None:
-      if i['city'] == location_selection:
-        office_objects.append(i)
+  else:
 
-  return render(request, 'addpatient/make_appointment.html', {'office_object' : office_object})
+    return render(request, 'addpatient/date_selection.html', {})
 
 

@@ -2548,13 +2548,13 @@ input {
  * 2. Remove excess padding in IE 8/9/10.
  */
 input[type="checkbox"],
-input[type="radio"] {
+/*input[type="radio"] {
   box-sizing: border-box;
   /* 1 */
   padding: 0;
   /* 2 */
 }
-
+*/
 /**
  * Fix the cursor style for Chrome's increment/decrement buttons. For certain
  * `font-size` values of the `input`, it causes the cursor style of the
@@ -5904,13 +5904,13 @@ textarea.materialize-textarea {
 
 /* Radio Buttons
    ========================================================================== */
-[type="radio"]:not(:checked),
+/*[type="radio"]:not(:checked),
 [type="radio"]:checked {
   position: absolute;
   left: -9999px;
   opacity: 0;
 }
-
+*/
 [type="radio"]:not(:checked) + label,
 [type="radio"]:checked + label {
   position: relative;

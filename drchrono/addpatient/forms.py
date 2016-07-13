@@ -1,7 +1,6 @@
 from django import forms
 
 class PatientForm(forms.Form):
-  # make datetime
   # patient_date_of_birth = forms.DateField(label='DOB', max_length=300)
   patient_first_name = forms.CharField(label='First_Name', max_length=20)
   patient_last_name = forms.CharField(label='Last_Name', max_length=300)
@@ -22,5 +21,6 @@ class AppointmentForm(forms.Form):
 
 
 class EmailForm(forms.Form):
+  # patient_date_of_birth = forms.DateField(label='DOB')
   patient_email = forms.CharField(label='Email', max_length=50)
 
