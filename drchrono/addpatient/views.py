@@ -10,16 +10,16 @@ def home(request):
       email = request.POST.get('patient_email')
       payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm', 'email' : email}
       req = requests.get('https://drchrono.com/api/patients', params=payload)
-      # what variable quality can be pointed at?
-      if req:
-        # if patient already exists, redirect to set up appt
-        # store patient id in session
-        return HttpResponseRedirect('/addpatient/make_appointment')
+      res = req.json()
+      if len(res['results']) > 0:
+         return HttpResponseRedirect('/addpatient/make_appointment')
       else:
         # if nothing returned, redirect to signup_form
-        return redirect('addpatient/sign_up.html')
+        return HttpResponseRedirect('/addpatient/signup_form')
 
-
+    #invalid form error handling
+    else:
+      return render(request, 'addpatient/home.html', {'form' : form})
 
   else:
     form = EmailForm()
@@ -66,18 +66,24 @@ def signup_form(request):
 
 
 def make_appointment(request):
-  # payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL',}
-  # req = requests.get('https://drchrono.com/api/offices', params=payload)
+
+
   # response = req.json()
-  office_locations = []
-  # potentially hide this iteration in a utils file
+  if request.method == "POST":
+    location = request.POST.get('location')
+    # payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
+    # req = requests.get('https://drchrono.com/api/offices', params=payload)
+    # res = req.json()
+    return render(request, 'addpatient/dateselection.html', {'office_obj' : location})
+
+
+  else:
+    office_locations = ['San Francisco', 'New York', 'Chicago']
   # for i in response['results']:
   #   if i['city'] != None:
   #     if i['city'] not in storage:
   #       office_locations.append(i['city'])
-
-
-  return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
+    return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
 
 
 def show_dates(request):

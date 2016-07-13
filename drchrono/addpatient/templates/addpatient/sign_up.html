@@ -1,10 +1,12 @@
 {% extends "addpatient/layout.html" %}
 
 {% block content %}
-<h3>New Patient</h3>
-<form action={% url 'signup_form' %} method='POST'>
-  {% csrf_token %}
-  {{ form }}
-  <input type='submit' value='Submit' />
-</form>
+<div class='container'>
+  <h3>New Patient</h3>
+  <form action={% url 'signup_form' %} method='POST'>
+    {% csrf_token %}
+    {{ form }}
+    <input type='submit' value='Submit' />
+  </form>
+</div>
 {% endblock %}

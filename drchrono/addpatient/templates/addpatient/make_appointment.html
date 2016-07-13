@@ -1,25 +1,18 @@
 {% extends "addpatient/layout.html" %}
 {% block content %}
 
+<div class="container">
 
-<h1 >Appointment Page</h1>
+  <center>
+    <h3>Location Selector</h3>
+  </center>
 
-<h3>Location Selector</h3>
-
-
-
-  <form>
-
+  <form action={% url 'make_appointment' %} method='POST'>
+    {% csrf_token %}
     {% for location in office_locations %}
-    <input type="radio">{{ location }}</input>
-
+    <input type="radio" name="location" value="{{location}}"/>{{ location }}</br>
     {% endfor %}
+    <input type="submit" value="Submit">
   </form>
-
-
-
-
-
-<h3>DatePicker</h3>
-
+</div>
 {% endblock %}
