@@ -88,13 +88,13 @@ def show_dates(request):
   req = requests.get('https://drchrono.com/api/offices', params=payload)
   response = req.json()
 
-  office_object = None
+  office_objects = []
 
-  # find corresponding office object
+  # find corresponding office objects
   for i in response['results']:
     if i['city'] != None:
-      if i['city'] == location_selection
-        city_object = i
+      if i['city'] == location_selection:
+        office_objects.append(i)
 
   return render(request, 'addpatient/make_appointment.html', {'office_object' : office_object})
 
