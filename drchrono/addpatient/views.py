@@ -66,42 +66,53 @@ def signup_form(request):
 
 
 def make_appointment(request):
-
-
   # response = req.json()
   if request.method == "POST":
     location = request.POST.get('location')
-    # payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
-    # req = requests.get('https://drchrono.com/api/offices', params=payload)
-    # res = req.json()
-    return render(request, 'addpatient/dateselection.html', {'office_obj' : location})
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
 
+    req = requests.get('https://drchrono.com/api/offices', params=payload)
+    res = req.json()
+
+    return render(request, 'addpatient/date_selection.html', {'doctor_id' : res['results'][0]['doctor_id'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
 
   else:
     office_locations = ['San Francisco', 'New York', 'Chicago']
-  # for i in response['results']:
-  #   if i['city'] != None:
-  #     if i['city'] not in storage:
-  #       office_locations.append(i['city'])
+    # for i in response['results']:
+    #   if i['city'] != None:
+    #     if i['city'] not in storage:
+    #       office_locations.append(i['city'])
     return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
 
 
-def show_dates(request):
-  # get location from params
-  location_selection = request.POST.get('location_selection')
-  # api call
-  payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm'}
-  req = requests.get('https://drchrono.com/api/offices', params=payload)
-  response = req.json()
+def date_selection(request):
+  if request.method == "POST":
+    office_id = request.POST.get('office_id')
+    doctor_id = request.POST.get('doctor_id')
+    start_time = request.POST.get('start_time')
+    end_time = request.POST.get('end_time')
 
-  office_objects = []
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'doctor_id' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : 1, 'scheduled_time' : start_time}
 
-  # find corresponding office objects
-  for i in response['results']:
-    if i['city'] != None:
-      if i['city'] == location_selection:
-        office_objects.append(i)
+    req = requests.post('https://drchrono.com/api/appointments', data=payload)
 
-  return render(request, 'addpatient/make_appointment.html', {'office_object' : office_object})
+    return HttpResponse(req)
+  else:
+    # get location from params
+    location_selection = request.POST.get('location_selection')
+    # api call
+    payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm'}
+    req = requests.get('https://drchrono.com/api/offices', params=payload)
+    response = req.json()
+
+    office_objects = []
+
+    # find corresponding office objects
+    for i in response['results']:
+      if i['city'] != None:
+        if i['city'] == location_selection:
+          office_objects.append(i)
+
+    return render(request, 'addpatient/make_appointment.html', {'office_object' : office_objects})
 
 
