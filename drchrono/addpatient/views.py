@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import PatientForm, EmailForm
 import requests
+import datetime
 
 def home(request):
   if request.method == "POST":
@@ -11,10 +12,14 @@ def home(request):
       payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm', 'email' : email}
       req = requests.get('https://drchrono.com/api/patients', params=payload)
       res = req.json()
+
       if len(res['results']) > 0:
-         return HttpResponseRedirect('/addpatient/make_appointment')
+        request.session['patient_id'] = res['results'][0]['id']
+        return HttpResponseRedirect('/addpatient/make_appointment')
+
       else:
         # if nothing returned, redirect to signup_form
+
         return HttpResponseRedirect('/addpatient/signup_form')
 
     #invalid form error handling
@@ -74,7 +79,7 @@ def make_appointment(request):
     req = requests.get('https://drchrono.com/api/offices', params=payload)
     res = req.json()
 
-    return render(request, 'addpatient/date_selection.html', {'doctor_id' : res['results'][0]['doctor_id'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
+    return render(request, 'addpatient/date_selection.html', {'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
 
   else:
     office_locations = ['San Francisco', 'New York', 'Chicago']
@@ -92,27 +97,14 @@ def date_selection(request):
     start_time = request.POST.get('start_time')
     end_time = request.POST.get('end_time')
 
-    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'doctor_id' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : 1, 'scheduled_time' : start_time}
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'doctor' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : request.session['patient_id'], 'scheduled_time' : datetime.datetime.now()}
 
     req = requests.post('https://drchrono.com/api/appointments', data=payload)
 
     return HttpResponse(req)
+
   else:
-    # get location from params
-    location_selection = request.POST.get('location_selection')
-    # api call
-    payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm'}
-    req = requests.get('https://drchrono.com/api/offices', params=payload)
-    response = req.json()
 
-    office_objects = []
-
-    # find corresponding office objects
-    for i in response['results']:
-      if i['city'] != None:
-        if i['city'] == location_selection:
-          office_objects.append(i)
-
-    return render(request, 'addpatient/make_appointment.html', {'office_object' : office_objects})
+    return render(request, 'addpatient/date_selection.html', {})
 
 
