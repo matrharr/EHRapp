@@ -6,18 +6,16 @@
 
 <h3>Location Selector</h3>
 
-  <a class='dropdown-button btn' href='#' data-activates='dropdown1'>Dropdown</a>
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="">1</a></li>
-    <li class='divider'></li>
-    <li><a href="">2</a></li>
-    <li class='divider'></li>
-    <li><a href="">3</a></li>
-    <li class='divider'></li>
-    <li><a href="">4</a></li>
-  </ul>
 
-    {{ office_locations }}
+
+  <form>
+
+    {% for location in office_locations %}
+    <input type="radio">{{ location }}</input>
+
+    {% endfor %}
+  </form>
+
 
 
 

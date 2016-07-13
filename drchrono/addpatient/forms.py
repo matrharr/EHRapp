@@ -22,5 +22,7 @@ class AppointmentForm(forms.Form):
 
 
 class EmailForm(forms.Form):
+  patient_date_of_birth = forms.CharField(label='DOB', widget=forms.TextInput(attrs={'class' : 'hat'}))
+  patient_cell_phone = forms.CharField(label='Phone')
   patient_email = forms.CharField(label='Email', max_length=50)
 
