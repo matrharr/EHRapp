@@ -14,6 +14,16 @@ def parse_office(response):
 def parse_appointments(response):
   appointments = []
   for timeslots in response['results'][0]['online_timeslots']:
-    appointments.append(timeslots)
+    if timeslots['day'] == 1:
+      timeslots['day'] = 'Monday'
+    elif timeslots['day'] == 3:
+      timeslots['day'] = 'Wednesday'
+    else:
+      timeslots['day'] = 'Friday'
+
+    appointments.append([timeslots['day'], timeslots['hour']])
+
+
+
 
   return appointments

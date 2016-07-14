@@ -11,7 +11,7 @@ form {
 }
 
 .login {
-  padding-top: 150px;
+  padding-top: 120px;
 }
 
 #drchrono {
@@ -25,4 +25,8 @@ form {
 
 .appointment {
   background-color: #6E6E6E;
+}
+
+#login_header {
+  padding-bottom: 50px;
 }

@@ -10,7 +10,7 @@ def home(request):
     form = EmailForm(request.POST)
     if form.is_valid():
       email = request.POST.get('patient_email')
-      payload = {'access_token' : 'JkflzvxwYojWvkbuq9bBYVtQyNVXjm', 'email' : email}
+      payload = {'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije', 'email' : email}
       req = requests.get('https://drchrono.com/api/patients', params=payload)
       res = req.json()
 
@@ -47,7 +47,7 @@ def signup_form(request):
       city = request.POST.get('patient_city')
 
       payload = {
-                'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL',
+                'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije',
                 'gender' : gender,
                 'doctor' :  102394,
                 # Change template to send datetime
@@ -61,8 +61,10 @@ def signup_form(request):
                 }
 
       req = requests.post('https://drchrono.com/api/patients', data=payload)
+      # res = req.json()
       # before redirect, store session
-      request.session['patient_id'] = res['results'][0]['id']
+      # return HttpResponse(req)
+      request.session['patient_id'] = res['id']
       return HttpResponseRedirect('/addpatient/date_selection')
       # curl -X POST -d "access_token=Q35WExlSWLkgylJ7RYfkSpZcdFVwrL&gender=Male&doctor=102394" https://drchrono.com/api/patients
 
@@ -99,14 +101,14 @@ def date_selection(request):
     start_time = request.POST.get('start_time')
     end_time = request.POST.get('end_time')
 
-    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'doctor' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : request.session['patient_id'], 'scheduled_time' : datetime.datetime.now()}
+    payload = {'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije', 'doctor' : doctor_id, 'duration' : 60, 'exam_room' : 1, 'office' : office_id, 'patient' : request.session['patient_id'], 'scheduled_time' : datetime.datetime.now()}
 
     req = requests.post('https://drchrono.com/api/appointments', data=payload)
 
     return HttpResponse(req)
 
   else:
-    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'verbose' : 'true'}
+    payload = {'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije', 'verbose' : 'true'}
 
     # response object req
     req = requests.get('https://drchrono.com/api/offices', params=payload)
