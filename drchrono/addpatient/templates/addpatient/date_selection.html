@@ -3,17 +3,17 @@
 {% block content %}
 
 <center>
-<h4>Select An Open Appointment With: </h4>
+<h4>Select An Open Appointment </h4>
 </center>
 
 
-      {% for key, value in office_info.items %}
-        <div class='container'>
           <center>
+      <div class='container card col s12 m1'>
+      {% for key, value in office_info.items %}
             {{ value }}
-          </center>
-        </div>
       {% endfor %}
+      </div>
+          </center>
 
       {% for timeslot in appointments %}
         <div class='row'>

@@ -61,13 +61,13 @@ def signup_form(request):
                 'cell_phone' : cell_phone,
                 }
 
-      post_req = requests.post('https://drchrono.com/api/patients', data=post_payload)
+      res = post_req = requests.post('https://drchrono.com/api/patients', data=post_payload)
+      req = res.json()
+      # get_payload = {'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije', 'email' : email }
+      # get_req = requests.get('https://drchrono.com/api/patients', params=get_payload)
+      # res = get_req.json()
 
-      get_payload = {'access_token' : 'UwCDz7nKvDkNQjOumpXgPKcxl8eije', 'email' : email }
-      get_req = requests.get('https://drchrono.com/api/patients', params=get_payload)
-      res = get_req.json()
-
-      request.session['patient_id'] = res['results'][0]['id']
+      request.session['patient_id'] = req['id']
       return HttpResponseRedirect('/addpatient/date_selection')
     else:
       return render(request, 'addpatient/home.html', {'form' : form})
