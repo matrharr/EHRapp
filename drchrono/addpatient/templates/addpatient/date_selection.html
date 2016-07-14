@@ -1,17 +1,106 @@
 {% extends 'addpatient/layout.html' %}
 
 {% block content %}
-<div class='container'>
+
+<center>
+<h4>Select An Open Appointment</h4>
+</center>
+
+<div class='row'>
+  <div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
   <form action={% url 'date_selection' %} method="post">
     {% csrf_token %}
     <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
     <input type='hidden' name='office_id' value='{{ office_id }}'>
     <input type='hidden' name='start_time' value='{{ start_time }}'>
     <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>{{ doctor_name }}</p>
-    <p>{{ start_time }}</p>
-    <p>{{ end_time }}</p>
-    <input type='submit' value='Schedule Appointment'/>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>8AM</p>
+
+    <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
   </form>
+      </div>
+    </div>
+  </div>
+  <div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>9AM</p>
+        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
+  </form>
+      </div>
+    </div>
+  </div>
+  <div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>10AM</p>
+        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
+  </form>
+      </div>
+    </div>
+  </div>
+  <div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>11AM</p>
+        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
+  </form>
+      </div>
+    </div>
+  </div><div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>12AM</p>
+        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
+  </form>
+      </div>
+    </div>
+  </div><div class='col s12 m6'>
+    <div class='card blue-grey lighten-1'>
+      <div class='card-content white-text'>
+  <form action={% url 'date_selection' %} method="post">
+    {% csrf_token %}
+    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
+    <input type='hidden' name='office_id' value='{{ office_id }}'>
+    <input type='hidden' name='start_time' value='{{ start_time }}'>
+    <input type='hidden' name='end_time' value='{{ end_time }}'>
+    <p>Dr. {{ doctor_name }}</p>
+    <p>1PM</p>
+        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
+  </form>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

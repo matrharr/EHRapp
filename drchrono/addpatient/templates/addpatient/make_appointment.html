@@ -10,7 +10,7 @@
   <form action={% url 'make_appointment' %} method='POST'>
     {% csrf_token %}
     {% for location in office_locations %}
-    <input type="radio" name="location" value="{{location}}"/>{{ location }}</br>
+    <input type="radio" name="group{{ forloop.counter }}" value="{{ location }}" id='test{{ forloop.counter }}'/><label for='test{{ forloop.counter }}'>{{ location }}</label></br>
     {% endfor %}
     <input type="submit" value="Submit">
   </form>

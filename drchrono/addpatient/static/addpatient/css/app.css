@@ -5,3 +5,20 @@ body {
 form {
   font-family: sans-serif;
   }
+
+#login_title {
+  padding-bottom: 100px;
+}
+
+.login {
+  padding-top: 150px;
+}
+
+#drchrono {
+  color: green;
+}
+
+.btn, .btn:hover{
+  background-color: green;
+}
+

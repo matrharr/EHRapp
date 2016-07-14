@@ -15,7 +15,7 @@ def home(request):
 
       if len(res['results']) > 0:
         request.session['patient_id'] = res['results'][0]['id']
-        return HttpResponseRedirect('/addpatient/make_appointment')
+        return HttpResponseRedirect('/addpatient/date_selection')
 
       else:
         # if nothing returned, redirect to signup_form
@@ -61,7 +61,8 @@ def signup_form(request):
 
       req = requests.post('https://drchrono.com/api/patients', data=payload)
       # before redirect, store session
-      return HttpResponseRedirect('/addpatient/make_appointment')
+      request.session['patient_id'] = res['results'][0]['id']
+      return HttpResponseRedirect('/addpatient/date_selection')
       # curl -X POST -d "access_token=Q35WExlSWLkgylJ7RYfkSpZcdFVwrL&gender=Male&doctor=102394" https://drchrono.com/api/patients
 
       # curl -X GET -d "access_token=" https://drchrono.com/api/doctors
@@ -70,24 +71,24 @@ def signup_form(request):
     return render(request, 'addpatient/sign_up.html', {'form':form})
 
 
-def make_appointment(request):
-  # response = req.json()
-  if request.method == "POST":
-    location = request.POST.get('location')
-    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
+# def make_appointment(request):
+#   # response = req.json()
+#   if request.method == "POST":
+#     location = request.POST.get('location')
+#     payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'city' : location}
 
-    req = requests.get('https://drchrono.com/api/offices', params=payload)
-    res = req.json()
+#     req = requests.get('https://drchrono.com/api/offices', params=payload)
+#     res = req.json()
 
-    return render(request, 'addpatient/date_selection.html', {'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
+#     return render(request, 'addpatient/date_selection.html', {'doctor_name' : res['results'][0]['name'], 'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
 
-  else:
-    office_locations = ['San Francisco', 'New York', 'Chicago']
-    # for i in response['results']:
-    #   if i['city'] != None:
-    #     if i['city'] not in storage:
-    #       office_locations.append(i['city'])
-    return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
+#   else:
+#     office_locations = ['San Francisco', 'New York', 'Chicago']
+#     # for i in response['results']:
+#     #   if i['city'] != None:
+#     #     if i['city'] not in storage:
+#     #       office_locations.append(i['city'])
+#     return render(request, 'addpatient/make_appointment.html', {'office_locations' : office_locations})
 
 
 def date_selection(request):
@@ -104,7 +105,17 @@ def date_selection(request):
     return HttpResponse(req)
 
   else:
+    payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'verbose' : 'true'}
+
+    # req = requests.get('https://drchrono.com/api/offices', params=payload)
+    # res = req.json()
+
+
+
+    # for timeslots in res['results'][0]['online_timeslots']:
 
     return render(request, 'addpatient/date_selection.html', {})
+    # return HttpResponse(res['results'][0]['online_timeslots'][0]['day'])
+    # return render(request, 'addpatient/date_selection.html', {'doctor_name' : res['results'][0]['name'], 'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
 
 
