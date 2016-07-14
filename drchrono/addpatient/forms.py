@@ -11,13 +11,13 @@ class PatientForm(forms.Form):
   patient_city = forms.CharField(label='City', max_length=300)
 
 
-class AppointmentForm(forms.Form):
-  appointment_duration = forms.IntegerField(label='Duration')
-  appointment_exam_room = forms.IntegerField(label='Exam_Room')
-  appointment_doctor = forms.IntegerField(label='Doctor_ID')
-  appointment_office = forms.IntegerField(label='office')
-  appointment_patient = forms.IntegerField(label='patient_id')
-  appointment_scheduled_time = forms.DateField(label='Scheduled_Time')
+# class AppointmentForm(forms.Form):
+#   appointment_duration = forms.IntegerField(label='Duration')
+#   appointment_exam_room = forms.IntegerField(label='Exam_Room')
+#   appointment_doctor = forms.IntegerField(label='Doctor_ID')
+#   appointment_office = forms.IntegerField(label='office')
+#   appointment_patient = forms.IntegerField(label='patient_id')
+#   appointment_scheduled_time = forms.DateField(label='Scheduled_Time')
 
 
 class EmailForm(forms.Form):
