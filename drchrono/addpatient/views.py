@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import PatientForm, EmailForm
 import requests
 import datetime
+from utils import parse_office, parse_appointments
 
 def home(request):
   if request.method == "POST":
@@ -107,15 +108,13 @@ def date_selection(request):
   else:
     payload = {'access_token' : 'Q35WExlSWLkgylJ7RYfkSpZcdFVwrL', 'verbose' : 'true'}
 
-    # req = requests.get('https://drchrono.com/api/offices', params=payload)
-    # res = req.json()
+    # response object req
+    req = requests.get('https://drchrono.com/api/offices', params=payload)
 
+    res = req.json()
+    office_info = parse_office(res)
+    appointments = parse_appointments(res)
 
-
-    # for timeslots in res['results'][0]['online_timeslots']:
-
-    return render(request, 'addpatient/date_selection.html', {})
-    # return HttpResponse(res['results'][0]['online_timeslots'][0]['day'])
-    # return render(request, 'addpatient/date_selection.html', {'doctor_name' : res['results'][0]['name'], 'doctor_id' : res['results'][0]['doctor'], 'start_time' : res['results'][0]['start_time'], 'end_time' : res['results'][0]['end_time'], 'office_id' : res['results'][0]['id']})
+    return render(request, 'addpatient/date_selection.html', {'office_info' : office_info, 'appointments' : appointments})
 
 
