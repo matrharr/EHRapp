@@ -2548,9 +2548,9 @@ input {
  * 2. Remove excess padding in IE 8/9/10.
  */
 input[type="checkbox"],
-/*input[type="radio"] {
+input[type="radio"] {
   box-sizing: border-box;
-  /* 1 */
+  /* 1
   padding: 0;
   /* 2 */
 }
@@ -4907,7 +4907,7 @@ small {
 }
 
 .btn:hover, .btn-large:hover {
-  background-color: #2bbbad;
+  background-color: #26a69a;
 }
 
 .btn-floating {
@@ -5904,13 +5904,13 @@ textarea.materialize-textarea {
 
 /* Radio Buttons
    ========================================================================== */
-/*[type="radio"]:not(:checked),
+[type="radio"]:not(:checked),
 [type="radio"]:checked {
   position: absolute;
   left: -9999px;
   opacity: 0;
 }
-*/
+
 [type="radio"]:not(:checked) + label,
 [type="radio"]:checked + label {
   position: relative;
