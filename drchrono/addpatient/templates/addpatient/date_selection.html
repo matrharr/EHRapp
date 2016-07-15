@@ -3,27 +3,40 @@
 {% block content %}
 
 <center>
-<h4>Select An Open Appointment With: </h4>
+<h4>Select An Open Appointment </h4>
 </center>
 
-      {% for key, value in office_info.items %}
-        <div class='container'>
-          {{ value }}
+
+
+      <div class='row'>
+        <div class='card col s6 m4'>
+
+
+        <p>{{ office_info.name }}</p>
+        <p>{{ office_info.address }}</p>
+        <p> {{office_info.city}} </p>
+        <p> {{office_info.state}} </p>
+        <p> {{office_info.zip_code}} </p>
+
+
         </div>
-      {% endfor %}
+      </div>
 
       {% for timeslot in appointments %}
         <div class='row'>
-          <div class='col s12 m6'>
+          <div class='col s12 m4'>
             <div class='card appointment lighten-1'>
               <div class='card-content white-text'>
                 <form action={% url 'date_selection' %} method="post">
                   {% csrf_token %}
-                  <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-                  <input type='hidden' name='office_id' value='{{ office_id }}'>
-                  <input type='hidden' name='start_time' value='{{ start_time }}'>
-                  <input type='hidden' name='end_time' value='{{ end_time }}'>
-                  <p>{{ timeslot }}</p>
+                  {% for times in timeslot %}
+                  <input type='hidden' name='doctor_id' value='102394'>
+                  <input type='hidden' name='office_id' value='109142'>
+                  <input type='hidden' name='start_time' value='{{ timeslot }}'>
+                  <input type='hidden' name='end_time' value='{{ e }}'>
+                    <p>{{ times }} AM</p>
+                  {% endfor %}
+
 
                   <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
                 </form>
@@ -33,104 +46,4 @@
       {% endfor %}
 
 
-
-
-
-<!-- <div class='row'>
-  <div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>8AM</p>
-
-    <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div>
-  <div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>9AM</p>
-        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div>
-  <div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>10AM</p>
-        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div>
-  <div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>11AM</p>
-        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div><div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>12AM</p>
-        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div><div class='col s12 m6'>
-    <div class='card blue-grey lighten-1'>
-      <div class='card-content white-text'>
-  <form action={% url 'date_selection' %} method="post">
-    {% csrf_token %}
-    <input type='hidden' name='doctor_id' value='{{ doctor_id }}'>
-    <input type='hidden' name='office_id' value='{{ office_id }}'>
-    <input type='hidden' name='start_time' value='{{ start_time }}'>
-    <input type='hidden' name='end_time' value='{{ end_time }}'>
-    <p>Dr. {{ doctor_name }}</p>
-    <p>1PM</p>
-        <input class='waves-light btn' type='submit' value='Schedule Appointment'/>
-  </form>
-      </div>
-    </div>
-  </div>
-</div> -->
 {% endblock %}

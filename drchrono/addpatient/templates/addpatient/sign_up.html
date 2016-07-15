@@ -5,10 +5,12 @@
   <center>
     <h4>New Patient Signup</h4>
   </center>
-  <form action={% url 'signup_form' %} method='POST'>
-    {% csrf_token %}
-    {{ form }}
-    <input class='btn' type='submit' value='Submit' />
-  </form>
+  <div id='signup'>
+    <form action={% url 'signup_form' %} method='POST'>
+      {% csrf_token %}
+      {{ form }}
+      <input class='btn' type='submit' value='Submit' />
+    </form>
+  </div>
 </div>
 {% endblock %}
