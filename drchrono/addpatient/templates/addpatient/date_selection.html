@@ -7,13 +7,20 @@
 </center>
 
 
-          <center>
-      <div class='container card col s12 m1'>
-      {% for key, value in office_info.items %}
-            {{ value }}
-      {% endfor %}
+
+      <div class='row'>
+        <div class='card col s6 m4'>
+
+
+        <p>{{ office_info.name }}</p>
+        <p>{{ office_info.address }}</p>
+        <p> {{office_info.city}} </p>
+        <p> {{office_info.state}} </p>
+        <p> {{office_info.zip_code}} </p>
+
+
+        </div>
       </div>
-          </center>
 
       {% for timeslot in appointments %}
         <div class='row'>
@@ -22,12 +29,12 @@
               <div class='card-content white-text'>
                 <form action={% url 'date_selection' %} method="post">
                   {% csrf_token %}
+                  {% for times in timeslot %}
                   <input type='hidden' name='doctor_id' value='102394'>
                   <input type='hidden' name='office_id' value='109142'>
                   <input type='hidden' name='start_time' value='{{ timeslot }}'>
                   <input type='hidden' name='end_time' value='{{ e }}'>
-                  {% for times in timeslot %}
-                    <p>{{ times }}</p>
+                    <p>{{ times }} AM</p>
                   {% endfor %}
 
 
