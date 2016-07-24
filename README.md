@@ -1,2 +1,2 @@
 # drchrono
-Application for adding new patients and creating appointments
+A Django application using a popular EHR api. Acts as a kiosk for new and returning patients.
